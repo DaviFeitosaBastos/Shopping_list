@@ -14,14 +14,6 @@ A simple terminal-based shopping list manager built in Python.
 
 - Python 3.10+
 
-## 🚀 How to run
-
-**1. Clone the repository**
-```bash
-git clone https://github.com/DaviFeitosaBastos/Mini_project_in_Python.git
-cd Mini_project_in_Python
-```
-
 ## ⚙️ Setup
 
 **1. Clone the repository**
