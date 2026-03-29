@@ -22,9 +22,29 @@ git clone https://github.com/DaviFeitosaBastos/Mini_project_in_Python.git
 cd Mini_project_in_Python
 ```
 
-**2. Run**
+## ⚙️ Setup
+
+**1. Clone the repository**
+```bash
+git clone https://github.com/DaviFeitosaBastos/Mini_project_in_Python.git
+cd Mini_project_in_Python
+```
+
+**2. Create and activate virtual environment**
+```bash
+# Windows
+python -m venv venv
+venv\Scripts\activate
+
+# Linux/Mac
+python -m venv venv
+source venv/bin/activate
+```
+
+**3. Run**
 ```bash
 python main.py
+```
 ```
 
 ## 🧠 Concepts used
