@@ -1,8 +1,8 @@
-# 🛒 Shopping List Manager
+# Shopping List Manager
 
 A simple terminal-based shopping list manager built in Python.
 
-## 📋 Features
+## Features
 
 - Add items to the list
 - View all items
@@ -10,11 +10,11 @@ A simple terminal-based shopping list manager built in Python.
 - Input validation and error handling
 - Cross-platform terminal clearing (Windows & Linux/Mac)
 
-## 🛠️ Requirements
+## Requirements
 
 - Python 3.10+
 
-## ⚙️ Setup
+## Setup
 
 **1. Clone the repository**
 ```bash
@@ -39,7 +39,7 @@ python main.py
 ```
 ```
 
-## 🧠 Concepts used
+## Concepts used
 
 - Functions and docstrings
 - Lists and enumeration
@@ -47,7 +47,7 @@ python main.py
 - Input validation with try/except
 - Cross-platform OS detection with `platform`
 
-## 🗺️ Roadmap
+## Roadmap
 
 - [ ] Save list to a `.txt` file
 - [ ] Load list from a `.txt` file
@@ -55,7 +55,7 @@ python main.py
 - [ ] Categories for items
 - [ ] Item quantity support
 
-## 👨‍💻 Author
+## Author
 
 Made by [Davi Feitosa Bastos](https://github.com/DaviFeitosaBastos)
 
