@@ -7,7 +7,7 @@ shopping_list = []
 
 def clear():
     """Clears the terminal"""
-    os.system("cls" if platform.system() == "Windows" else "clear")
+    os.system("clear" if platform.system() == "Linux" else "cls")
 
 
 def pause(msg="Press Enter to continue..."):
