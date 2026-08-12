@@ -6,17 +6,20 @@ from time import sleep
 cs = Console()
 log = get_logger(__name__)
 
-def get_options() -> int | Literal[False]:
+def get_options() -> int | None:
     options = [x for x in range(11)]
+    
     while True:
         try:
-            choose = int(cs.input("[#57e389]Select one of those: "))
+            choose = int(cs.input("[#57e389]Select one of those: ").lower())
+
             if choose in options:
                 return choose
             
-        except ValueError as e:
-            log.info("Invalid option try only integers")
-            return False
+        except ValueError:
+            log.info("Invalid option try only integer")
+            sleep(0.8)
+            return None
 
 def get_name() -> str | None:
     name = cs.input("[#57e389]Write the name right here: ")
@@ -30,17 +33,13 @@ def get_amout() -> int | float:
     while True:
         try:
             amount = (cs.input("[#57e389]How much/many would you like: "))
-            return int(amount)
+            return float(amount)
+            
         except ValueError:
-            try:
-                return float(amount)
-            except ValueError:
-                log.error("Error letters are not allowed! try again")
-                sleep(0.8)
-    
-
-     
-
+            log.error("Error letters are not allowed! try again")
+            sleep(0.8)
+            
+                
 def validate_ask_the_user(prompt: str) -> str | Literal[False] | None:
     yes = ['yes', 'y']
     no = ['not', 'no', 'n']
