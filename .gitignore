@@ -1,5 +1,41 @@
-venv/
-*.pyc
-__pycache__
+# Ignore logs and temp files
 *.log
+*.tmp
+*.temp
+.cache/
+*.pyc
+*.json
+
+# Ignore IDEs 
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
 .zed/
+
+
+# --- Dependency and builds ---
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.env
+
+
+# --- Security and locals configs ---
+*.key
+*.pem
+*.crt
+.env
+.env.local
+.env.*.local
+config/secrets.yml
