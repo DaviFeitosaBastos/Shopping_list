@@ -29,7 +29,7 @@ def get_name() -> str | None:
         return None
 
     
-def get_amout() -> int | float:
+def get_amout() -> float:
     while True:
         try:
             amount = (cs.input("[#57e389]How much/many would you like: "))
