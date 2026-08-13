@@ -5,7 +5,7 @@ import subprocess
 import sys
 from time import sleep
 from utils.logic import add_items_to_list, generate_id, load_list, list_path
-from utils.validations import validate_ask_the_user, get_options, get_name, get_amout, get_measures
+from utils.validations import get_options, get_name, get_amout, get_measures
 
 
 
@@ -104,22 +104,26 @@ def show_items_menu():
 
        
 def exit_program() -> None | bool:
+    yes = ['yes', 'y']
+    no = ['no', 'n']
     while True:
         clear()
-        print(Panel("Are you sure you want to leave?",title="Exit",style="#c01c28", width=35))
+        print(Panel("Are you sure you want to leave?",title="Exit",style="#c01c28", width=35, subtitle='Type here'))
 
-        user_input = validate_ask_the_user(cs.input("[#c01c28](Y)es or (N)ot: ").lower())
+        user_input = cs.input("[#c01c28]Type Yes or No: ").lower()
 
-        if user_input:
+        if user_input in yes:
             clear()
             exit()
 
-        elif user_input is None:
-            print("[#c01c28]Invalid input. Please type 'yes' or 'no'.")
-            sleep(0.8)
-            continue
+        elif user_input in no:
+            clear()
+            return False
+            
+        print("[#c01c28]Invalid input. Please type 'yes' or 'no'.")
+        sleep(0.8)
+        continue
 
-        clear()
-        return False
+        
             
 
