@@ -39,3 +39,4 @@ env/
 .env.local
 .env.*.local
 config/secrets.yml
+.ideas.md
