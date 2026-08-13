@@ -6,9 +6,12 @@ from utils.logic import load_shopping_list
 
 
 
+
+
 def main():
     while True:
         main_menu()
+        
         choose = get_options()
 
         if choose not in [0, 1, 2, 3, 4]:
