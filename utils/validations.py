@@ -24,17 +24,18 @@ def get_options() -> int | None:
 
 
 def get_name() -> str | None:
-    name = cs.input("[#57e389]Write the name right here: ").capitalize()
+    name = cs.input("[#57e389]name: ").capitalize()
+    
     if isinstance(name, str):
+        if name == "":
+            return None
         return name
-    else:
-        return None
 
     
 def get_amout() -> float:
     while True:
         try:
-            amount = cs.input("[#57e389]How much/many would you like: ")
+            amount = cs.input("[#57e389]Amount: ")
             return float(amount)
             
         except ValueError:
@@ -42,17 +43,18 @@ def get_amout() -> float:
             sleep(0.8)
 
 
-def get_measures(measures):
+def get_measures():
+    MEASURES = ['kg', 'g', 'lb', 'oz', 'm', 'cm', 'mm', 'in', 'ft', 'l', 'ml']
     
     while True:
         try:           
-            measure = cs.input("[#57e389]What kind of measures: ").lower()
+            measure = cs.input("[#57e389]Measure: ").lower()
 
             if measure == "":
-                return "Unity"
+                return "unit"
             
-            if measure in measures:
-                return measure
+            if measure in MEASURES:
+                return measure.capitalize()
                 
             raise ValueError(f"This measure doesn't exist '{measure}'")
                 
