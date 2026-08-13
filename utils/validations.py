@@ -1,5 +1,4 @@
 from log.logging_setup import get_logger  
-from typing import Literal
 from rich.console import Console
 from rich import print
 from time import sleep
