@@ -1,14 +1,16 @@
 from log.logging_setup import get_logger  
 from typing import Literal
 from rich.console import Console
+from rich import print
 from time import sleep
+
 
 cs = Console()
 log = get_logger(__name__)
 
 
 def get_options() -> int | None:
-    options = [x for x in range(11)]
+    options = [0, 1, 2, 3, 4]
     
     while True:
         try:
@@ -20,17 +22,20 @@ def get_options() -> int | None:
         except ValueError:
             log.info("Invalid option try only integer")
             sleep(0.8)
-            return None
 
 
 def get_name() -> str | None:
-    name = cs.input("[#57e389]name: ").capitalize()
-    
-    if isinstance(name, str):
-        if name == "":
-            return None
+    while True:
+        
+        name = cs.input("[#57e389]name: ").capitalize()
+        
+        if not name:
+            print("[#c01c28]You can't let this field blank")
+            sleep(0.8)
+            continue
+            
         return name
-
+        
     
 def get_amout() -> float:
     while True:
@@ -63,15 +68,5 @@ def get_measures():
             sleep(0.8)
             
                 
-def validate_ask_the_user(prompt: str) -> Literal[True] | Literal[False] | None:
-    yes = ['yes', 'y']
-    no = ['not', 'no', 'n']
 
-    if prompt in yes:
-        return True
-        
-    elif prompt in no:
-        return False
-        
-    return None  
         
