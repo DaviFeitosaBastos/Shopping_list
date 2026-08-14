@@ -102,19 +102,14 @@ def show_items_menu():
         print("[#c01c28]The list is empty")
         print('[#57e389]⎯' * 40)      
         
-    for i, items in enumerate(list_loaded):       
-        print(f'[#57e389]Item:[/] {i + 1} [green]|[/] [bold]- {items['Item']}[/] {items['Amount']} {items['Measures']}')
+    for items in list_loaded:       
+        print(f'[#57e389]Item:[/] {items['Id']} [green]|[/] [bold]- {items['Item']}[/] {items['Amount']} {items['Measures']}')
         print('[#57e389]⎯' * 40)      
         
     _ = cs.input("[#57e389]Press enter to go back")
 
 
 def remove_items_menu():
-    table = Table()
-    table.style='#57e389'
-    table.add_column("[#57e389]Id")
-    table.add_column("[#57e389]Item")
-    
     while True:
         clear()
         print(Panel(
@@ -142,17 +137,23 @@ def remove_items_menu():
                 ))
                 _ = cs.input("[#c01c28]Press enter to return")
                 continue
-            with Live(table, refresh_per_second=4):  # update 4 times a second to feel fluid
-                for i, item in enumerate(list_loaded):
-                    sleep(0.1)  # arbitrary delay
-                    # update the renderable internally
-                    table.add_row(f"[bold blue]{i + 1}", f"{item['Item']}",)
+            
+            # CREATE TABLE HERE, FRESH EACH TIME
+            table = Table()
+            table.style='#57e389'
+            table.add_column("[#57e389]Id")
+            table.add_column("[#57e389]Item")
+            
+            with Live(table, refresh_per_second=4):
+                for item in list_loaded:
+                    sleep(0.1)
+                    table.add_row(f"[bold blue]{item['Id']}", f"{item['Item']}")
                     
-        id = get_id()
-        remove_items(id, list_loaded)
-        
-        print("[#57e389]Deleted with success")
-        sleep(0.8)
+            id = get_id()
+            remove_items(id, list_loaded)
+            
+            print("[#57e389]Deleted with success")
+            sleep(0.8)
         
        
 def exit_program() -> None | bool:
