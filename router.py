@@ -1,12 +1,11 @@
 from ui.menus import add_items_menu, exit_program, show_items_menu, remove_items_menu
+from utils.logic import load_shopping_list
 
-
-
-
-
-router = {
-    1: add_items_menu,
-    2: show_items_menu,
-    3: remove_items_menu,
-    0: exit_program
-}
+def get_router():
+    shopping_list = load_shopping_list()
+    return {
+        1: lambda: add_items_menu(shopping_list),
+        2: lambda: show_items_menu(shopping_list),
+        3: lambda: remove_items_menu(shopping_list),
+        0: exit_program
+    }

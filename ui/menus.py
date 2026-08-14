@@ -6,19 +6,13 @@ from rich import print
 import subprocess
 import sys
 from time import sleep
-from utils.logic import add_items_to_list, generate_id, load_shopping_list, remove_items
+from utils.logic import add_items_to_list, generate_id, remove_items, ShoppingItem
 from utils.validations import get_options, get_name, get_amout, get_measures, get_id
 
-
-
-
-
 cs = Console()
-list_loaded = load_shopping_list()
 
 def clear():
     subprocess.run(['clear']) if sys.platform == 'linux' else subprocess.run(['cls'])
-
 
 def main_menu() -> None:
     clear()
@@ -34,8 +28,7 @@ def main_menu() -> None:
                 width=35
     ))
 
-
-def add_items_menu():
+def add_items_menu(shopping_list: list[ShoppingItem]):
     while True:
         clear()
         print(Panel(
@@ -88,33 +81,31 @@ def add_items_menu():
             add_items_to_list(
                 name, 
                 amount, 
-                generate_id(list_loaded),
-                measure , 
-                list_loaded
+                generate_id(shopping_list),
+                measure, 
+                shopping_list
             )
-            
-        
-def show_items_menu() -> None:
+
+def show_items_menu(shopping_list: list[ShoppingItem]) -> None:
     clear()
     print('[#57e389]⎯' * 40)
     
-    if not list_loaded:
+    if not shopping_list:
         print("[#c01c28]The list is empty")
         print('[#57e389]⎯' * 40)      
         
-    for items in list_loaded:       
-        print(f'[#57e389]Item:[/] {items['Id']} [green]|[/] [bold]- {items['Item']}[/] {items['Amount']} {items['Measures']}')
+    for items in shopping_list:       
+        print(f'[#57e389]Item:[/] {items["Id"]} [green]|[/] [bold]- {items["Item"]}[/] {items["Amount"]} {items["Measures"]}')
         print('[#57e389]⎯' * 40)      
         
     _ = cs.input("[#57e389]Press enter to go back")
 
-
-def remove_items_menu():
+def remove_items_menu(shopping_list: list[ShoppingItem]):
     while True:
         clear()
         print(Panel(
-            "Would you like to remove any item?\n"+
-            "1 - to remove\n"+
+            "Would you like to remove any item?\n" +
+            "1 - to remove\n" +
             "0 - to return",
             style='#57e389',
             title='[#57e389]★ Remove items ★',
@@ -129,7 +120,7 @@ def remove_items_menu():
             
         elif choice == 1:
             clear()
-            if not list_loaded:
+            if not shopping_list:
                 print(Panel("[#c01c28]The list is empty", 
                     style='#c01c28',
                     title='[#c01c28]★ Remove items ★',
@@ -138,24 +129,22 @@ def remove_items_menu():
                 _ = cs.input("[#c01c28]Press enter to return")
                 continue
             
-            # CREATE TABLE HERE, FRESH EACH TIME
             table = Table()
             table.style='#57e389'
             table.add_column("[#57e389]Id")
             table.add_column("[#57e389]Item")
             
             with Live(table, refresh_per_second=4):
-                for item in list_loaded:
+                for item in shopping_list:
                     sleep(0.1)
                     table.add_row(f"[bold blue]{item['Id']}", f"{item['Item']}")
                     
-            id = get_id()
-            remove_items(id, list_loaded)
+            id = get_id(shopping_list)
+            remove_items(id, shopping_list)
             
             print("[#57e389]Deleted with success")
             sleep(0.8)
-        
-       
+
 def exit_program() -> None | bool:
     yes = ['yes', 'y']
     no = ['no', 'n']
@@ -176,7 +165,3 @@ def exit_program() -> None | bool:
         print("[#c01c28]Invalid input. Please type 'yes' or 'no'.")
         sleep(0.8)
         continue
-
-        
-            
-

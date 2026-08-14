@@ -2,7 +2,7 @@ from log.logging_setup import get_logger
 from rich.console import Console
 from rich import print
 from time import sleep
-from utils.logic import load_shopping_list
+from .logic import ShoppingItem
 import subprocess
 
 
@@ -29,9 +29,8 @@ def get_options() -> int:
             log.info("Invalid option try only integer")
             sleep(0.8)
 
-def get_id() -> int:
-    shopping_list = load_shopping_list()
-    ids = [item["Id"] for item in shopping_list]  # Get ACTUAL IDs from list
+def get_id(shopping_list: list[ShoppingItem]) -> int:
+    ids = [item["Id"] for item in shopping_list]
     
     while True:
         try:
