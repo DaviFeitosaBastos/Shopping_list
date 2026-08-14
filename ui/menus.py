@@ -91,16 +91,35 @@ def add_items_menu(shopping_list: list[ShoppingItem]):
 
 def show_items_menu(shopping_list: list[ShoppingItem]) -> None:
     clear()
-    print('[#57e389]⎯' * 40)
     
     if not shopping_list:
-        print("[#c01c28]The list is empty")
-        print('[#57e389]⎯' * 40)      
-        
-    for items in shopping_list:       
-        print(f'[#57e389]Item:[/] {items["Id"]} [green]|[/] [bold]- {items["Item"]}[/] {items["Amount"]} {items["Measures"]}')
-        print('[#57e389]⎯' * 40)      
-        
+        print(Panel(
+            "[#c01c28]The list is empty",
+            style='#c01c28',
+            title='[#c01c28]★ Shopping List ★',
+            width=40
+        ))
+        _ = cs.input("[#c01c28]Press enter to go back")
+        return
+    
+    table = Table()
+    table.style='#57e389'
+    table.add_column("[#57e389]Id")
+    table.add_column("[#57e389]Item")
+    table.add_column("[#57e389]Amount")
+    table.add_column("[#57e389]Measure")
+    
+    with Live(table, refresh_per_second=4):
+        for item in shopping_list:
+            sleep(0.1)
+            table.add_row(
+                f"[bold blue]{item['Id']}", 
+                f"{item['Item']}", 
+                f"{item['Amount']}", 
+                f"{item['Measures']}"
+            )
+    
+    print(f"\n[#57e389]Total items: {len(shopping_list)}")
     _ = cs.input("[#57e389]Press enter to go back")
 
 
@@ -159,7 +178,7 @@ def search_items_menu(shopping_list: list[ShoppingItem]):
             "[#57e389]0 - to return",
             style='#10d610',
             title='★ Search Menu ★',
-            subtitle='Type here',
+            subtitle='Select here',
             width=40
         ))
         
@@ -171,7 +190,14 @@ def search_items_menu(shopping_list: list[ShoppingItem]):
         
         if option == 1:
             clear()
-            search_term = cs.input("[#57e389]Search for item: ").lower()
+            print(Panel(
+                "[#57e389]Type the name of the item you want to search",
+                style='#10d610',
+                title='★ Search Menu ★',
+                subtitle='Type here',
+                width=50
+            ))
+            search_term = cs.input("[#57e389]Search: ").lower()
             
             if not search_term:
                 print("[#c01c28]Search term cannot be empty")
@@ -182,19 +208,34 @@ def search_items_menu(shopping_list: list[ShoppingItem]):
             
             clear()
             if not results:
-                print(f"[#c01c28]No items found with '{search_term}'")
-                sleep(1)
+                print(Panel(
+                    f"[#c01c28]No items found with '{search_term}'",
+                    style='#c01c28',
+                    title='[#c01c28]★ Search Menu ★',
+                    width=50
+                ))
+                _ = cs.input("[#c01c28]Press enter to continue")
                 continue
             
-            print('[#57e389]⎯' * 40)
-            print(f"[#57e389]Found {len(results)} result(s):")
-            print('[#57e389]⎯' * 40)
+            table = Table()
+            table.style='#57e389'
+            table.add_column("[#57e389]Id")
+            table.add_column("[#57e389]Item")
+            table.add_column("[#57e389]Amount")
+            table.add_column("[#57e389]Measure")
             
-            for item in results:
-                print(f'[#57e389]Item:[/] {item["Id"]} [green]|[/] [bold]- {item["Item"]}[/] {item["Amount"]} {item["Measures"]}')
-                print('[#57e389]⎯' * 40)
+            with Live(table, refresh_per_second=4):
+                for item in results:
+                    sleep(0.1)
+                    table.add_row(
+                        f"[bold blue]{item['Id']}", 
+                        f"{item['Item']}", 
+                        f"{item['Amount']}", 
+                        f"{item['Measures']}"
+                    )
             
-            _ = cs.input("[#57e389]Press enter to continue")
+            print(f"\n[#57e389]Found {len(results)} result(s)")
+            _ = cs.input("[#57e389]Press enter to go back")
             
 
 def exit_program() -> None | bool:
