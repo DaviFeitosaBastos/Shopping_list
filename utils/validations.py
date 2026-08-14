@@ -2,26 +2,49 @@ from log.logging_setup import get_logger
 from rich.console import Console
 from rich import print
 from time import sleep
+from utils.logic import load_shopping_list
+import subprocess
 
 
 cs = Console()
 log = get_logger(__name__)
 
+def clear():
+    _ = subprocess.run('clear')
 
-def get_options() -> int | None:
+def get_options() -> int:
     options = [0, 1, 2, 3, 4]
     
     while True:
         try:
-            choose = int(cs.input("[#57e389]Select one of those: ").lower())
+            choose = int(cs.input("[#57e389]Select one of those: "))
 
             if choose in options:
                 return choose
+                
+            print("[#c01c28]Invalid option")
+            sleep(0.8)
             
         except ValueError:
             log.info("Invalid option try only integer")
             sleep(0.8)
 
+def get_id() -> int:
+    ids = range(1, len(load_shopping_list()) + 1)
+    
+    while True:
+        try:
+            item_id = int(cs.input("[#57e389]Enter the ID you wish to delete: "))
+
+            if item_id in ids:
+                return item_id
+                
+            print("[#c01c28]Invalid ID")
+            sleep(0.8)
+            
+        except ValueError:
+            log.info("Invalid option try only integer")
+            sleep(0.8)
 
 def get_name() -> str:
     while True:
