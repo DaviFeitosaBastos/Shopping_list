@@ -5,6 +5,7 @@
 .cache/
 *.pyc
 *.json
+test.py
 
 # Ignore IDEs 
 .idea/

@@ -24,9 +24,9 @@ def main():
             print("[#c01c28]Invalid option, try again.")
             continue
 
-        action()
+        _ = action()
 
 
 if __name__ == "__main__":
-    load_list = load_shopping_list("database/shopping_list.json")
+    load_list = load_shopping_list()
     main()

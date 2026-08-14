@@ -4,7 +4,7 @@ from rich import print
 import subprocess
 import sys
 from time import sleep
-from utils.logic import add_items_to_list, generate_id, load_list, list_path
+from utils.logic import add_items_to_list, generate_id, load_shopping_list
 from utils.validations import get_options, get_name, get_amout, get_measures
 
 
@@ -12,7 +12,7 @@ from utils.validations import get_options, get_name, get_amout, get_measures
 
 
 cs = Console()
-
+_list_loaded = load_shopping_list()
 
 def clear():
     subprocess.run(['clear']) if sys.platform == 'linux' else subprocess.run(['cls'])
@@ -20,11 +20,11 @@ def clear():
 
 def main_menu() -> None:
     clear()
-    print(Panel("[#57e389]Options bellow:[/]\n"
-                "[#57e389]1 🞄 Add items to the list[/]\n"
-                "[#57e389]2 🞄 List the items saved\n"
-                "[#57e389]3 🞄 Remove items to the list\n"
-                "[#57e389]4 🞄 Search up\n"
+    print(Panel("[#57e389]Options bellow:[/]\n"+
+                "[#57e389]1 🞄 Add items to the list[/]\n"+
+                "[#57e389]2 🞄 List the items saved\n"+
+                "[#57e389]3 🞄 Remove items to the list\n"+
+                "[#57e389]4 🞄 Search up\n"+
                 "[#57e389]0 🞄 Cose the app", 
                 style='#10d610', 
                 title='★ Shopping list ★',
@@ -37,8 +37,8 @@ def add_items_menu():
     while True:
         clear()
         print(Panel(
-            "[#57e389]Would you like to add something?\n"
-            "[#57e389]1 - to add\n"
+            "[#57e389]Would you like to add something?\n"+
+            "[#57e389]1 - to add\n"+
             "[#57e389]0 - to return"
             ,style='#10d610',
             title='★ Adding items Menu ★',
@@ -55,23 +55,21 @@ def add_items_menu():
         if option == 1:               
             clear()
             print(Panel(
-                "[#57e389]Here you can name the item[/] [bold](e.g: Milk, Snacks)\n"
-                "[#57e389]Obs. You can type lower either way"
-                ,style='#10d610',
+                "[#57e389]Here you can name the item[/] [bold](e.g: Milk, Snacks)\n"+
+                "[#57e389]Obs. You can type lower either way",
+                style='#10d610',
                 title='★ Adding items Menu ★',
                 subtitle='Type the name here',
                 width=50
             ))
             name = get_name()
-            if name is None:
-                continue
             print(f"[#57e389]Name added {name}")
             sleep(0.8)
             clear()
             
             print(Panel(
-                "[#57e389]Now type the amount and its measure (e.g: 15 ml etc...)[/]\n"
-                "[#57e389]Obs. Only integer or float (e.g: 1, 1.5, 2.3, 4 etc..)\n\n"
+                "[#57e389]Now type the amount and its measure (e.g: 15 ml etc...)[/]\n"+
+                "[#57e389]Obs. Only integer or float (e.g: 1, 1.5, 2.3, 4 etc..)\n\n"+
                 "If you don't type the measure it's going to be 'unit'",
                 style='#10d610',
                 title='★ Adding items Menu ★',
@@ -85,22 +83,28 @@ def add_items_menu():
             sleep(1)
             clear()
 
-            add_items_to_list(name, amount, generate_id(load_list),measure ,load_list, list_path)
+            _ = add_items_to_list(
+                name, 
+                amount, 
+                generate_id(_list_loaded),
+                measure , 
+                _list_loaded
+            )
+            
         
-
 def show_items_menu():
     clear()
     print('[#57e389]⎯' * 40)
     
-    if not load_list:
+    if not _list_loaded:
         print("[#c01c28]The list is empty")
         print('[#57e389]⎯' * 40)      
         
-    for i, items in enumerate(load_list):       
+    for i, items in enumerate(_list_loaded):       
         print(f'[#57e389]Item:[/] {i + 1} [green]|[/] [bold]- {items['Item']}[/] {items['Amount']} {items['Measures']}')
         print('[#57e389]⎯' * 40)      
         
-    cs.input("[#57e389]Press enter to go back")
+    _ = cs.input("[#57e389]Press enter to go back")
 
        
 def exit_program() -> None | bool:

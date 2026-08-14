@@ -23,7 +23,7 @@ def get_options() -> int | None:
             sleep(0.8)
 
 
-def get_name() -> str | None:
+def get_name() -> str:
     while True:
         
         name = cs.input("[#57e389]name: ").capitalize()
@@ -47,24 +47,20 @@ def get_amout() -> float:
             sleep(0.8)
 
 
-def get_measures():
+def get_measures() -> str:
     MEASURES = ['kg', 'g', 'lb', 'oz', 'm', 'cm', 'mm', 'in', 'ft', 'l', 'ml']
     
     while True:
-        try:           
-            measure = cs.input("[#57e389]Measure: ").lower()
-
-            if measure == "":
-                return "unit"
-            
-            if measure in MEASURES:
-                return measure.capitalize()
-                
-            raise ValueError(f"This measure doesn't exist '{measure}'")
-                
-        except ValueError:
-            log.error("Error letters are not allowed! try again")
-            sleep(0.8)
+        measure = cs.input("[#57e389]Measure: ").lower()
+        
+        if measure == "":
+            return "unit"
+        
+        if measure in MEASURES:
+            return measure.capitalize()
+        
+        print(f"Invalid measure '{measure}'. Choose from: [#57e389]{', '.join(MEASURES)}")
+        sleep(0.8)
             
                 
 
