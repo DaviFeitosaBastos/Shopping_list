@@ -94,7 +94,7 @@ def add_items_menu():
             )
             
         
-def show_items_menu():
+def show_items_menu() -> None:
     clear()
     print('[#57e389]⎯' * 40)
     
