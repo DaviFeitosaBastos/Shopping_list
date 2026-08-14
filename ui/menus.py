@@ -1,18 +1,20 @@
 from rich.panel import Panel
 from rich.console import Console
+from rich.live import Live
+from rich.table import Table
 from rich import print
 import subprocess
 import sys
 from time import sleep
-from utils.logic import add_items_to_list, generate_id, load_shopping_list
-from utils.validations import get_options, get_name, get_amout, get_measures
+from utils.logic import add_items_to_list, generate_id, load_shopping_list, remove_items
+from utils.validations import get_options, get_name, get_amout, get_measures, get_id
 
 
 
 
 
 cs = Console()
-_list_loaded = load_shopping_list()
+list_loaded = load_shopping_list()
 
 def clear():
     subprocess.run(['clear']) if sys.platform == 'linux' else subprocess.run(['cls'])
@@ -83,12 +85,12 @@ def add_items_menu():
             sleep(1)
             clear()
 
-            _ = add_items_to_list(
+            add_items_to_list(
                 name, 
                 amount, 
-                generate_id(_list_loaded),
+                generate_id(list_loaded),
                 measure , 
-                _list_loaded
+                list_loaded
             )
             
         
@@ -96,16 +98,62 @@ def show_items_menu():
     clear()
     print('[#57e389]⎯' * 40)
     
-    if not _list_loaded:
+    if not list_loaded:
         print("[#c01c28]The list is empty")
         print('[#57e389]⎯' * 40)      
         
-    for i, items in enumerate(_list_loaded):       
+    for i, items in enumerate(list_loaded):       
         print(f'[#57e389]Item:[/] {i + 1} [green]|[/] [bold]- {items['Item']}[/] {items['Amount']} {items['Measures']}')
         print('[#57e389]⎯' * 40)      
         
     _ = cs.input("[#57e389]Press enter to go back")
 
+
+def remove_items_menu():
+    table = Table()
+    table.style='#57e389'
+    table.add_column("[#57e389]Id")
+    table.add_column("[#57e389]Item")
+    
+    while True:
+        clear()
+        print(Panel(
+            "Would you like to remove any item?\n"+
+            "1 - to remove\n"+
+            "0 - to return",
+            style='#57e389',
+            title='[#57e389]★ Remove items ★',
+            subtitle='[#57e389]select here',
+            width=39
+        ))
+        choice = get_options()
+    
+        if choice == 0:
+            clear()
+            break
+            
+        elif choice == 1:
+            clear()
+            if not list_loaded:
+                print(Panel("[#c01c28]The list is empty", 
+                    style='#c01c28',
+                    title='[#c01c28]★ Remove items ★',
+                    width=40
+                ))
+                _ = cs.input("[#c01c28]Press enter to return")
+                continue
+            with Live(table, refresh_per_second=4):  # update 4 times a second to feel fluid
+                for i, item in enumerate(list_loaded):
+                    sleep(0.1)  # arbitrary delay
+                    # update the renderable internally
+                    table.add_row(f"[bold blue]{i + 1}", f"{item['Item']}",)
+                    
+        id = get_id()
+        remove_items(id, list_loaded)
+        
+        print("[#57e389]Deleted with success")
+        sleep(0.8)
+        
        
 def exit_program() -> None | bool:
     yes = ['yes', 'y']
