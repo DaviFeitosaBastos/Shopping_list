@@ -1,4 +1,3 @@
-from time import sleep
 from log.logging_setup import get_logger
 from typing import cast, TypedDict
 import os
