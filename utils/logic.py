@@ -56,13 +56,11 @@ def add_items_to_list(
 
 def remove_items(id: int, shopping_list: list[ShoppingItem], path: str=list_path,) -> None:
     list_name = os.path.join(utils_dir, path)
-    try:
-        del shopping_list[id - 1]
+    for index, item in enumerate(shopping_list):
+        if item["Id"] == id:
+            del shopping_list[index]
+            break
+    with open(list_name, 'w', encoding='utf-8') as f:
+        json.dump(shopping_list, f, indent=4)
+        
 
-        with open(list_name, 'w', encoding='utf-8') as f:
-            json.dump(shopping_list, f, indent=4)
-            
-    except IndexError:
-        log.error("Id has not found")
-        sleep(0.8)
- 
