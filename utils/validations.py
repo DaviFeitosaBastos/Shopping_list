@@ -30,12 +30,12 @@ def get_options() -> int:
             sleep(0.8)
 
 def get_id() -> int:
-    ids = range(1, len(load_shopping_list()) + 1)
+    shopping_list = load_shopping_list()
+    ids = [item["Id"] for item in shopping_list]  # Get ACTUAL IDs from list
     
     while True:
         try:
             item_id = int(cs.input("[#57e389]Enter the ID you wish to delete: "))
-
             if item_id in ids:
                 return item_id
                 
