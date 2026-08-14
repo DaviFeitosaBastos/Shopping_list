@@ -14,6 +14,7 @@ cs = Console()
 def clear():
     subprocess.run(['clear']) if sys.platform == 'linux' else subprocess.run(['cls'])
 
+
 def main_menu() -> None:
     clear()
     print(Panel("[#57e389]Options bellow:[/]\n"+
@@ -27,6 +28,7 @@ def main_menu() -> None:
                 subtitle="Select here",
                 width=35
     ))
+
 
 def add_items_menu(shopping_list: list[ShoppingItem]):
     while True:
@@ -86,6 +88,7 @@ def add_items_menu(shopping_list: list[ShoppingItem]):
                 shopping_list
             )
 
+
 def show_items_menu(shopping_list: list[ShoppingItem]) -> None:
     clear()
     print('[#57e389]⎯' * 40)
@@ -99,6 +102,7 @@ def show_items_menu(shopping_list: list[ShoppingItem]) -> None:
         print('[#57e389]⎯' * 40)      
         
     _ = cs.input("[#57e389]Press enter to go back")
+
 
 def remove_items_menu(shopping_list: list[ShoppingItem]):
     while True:
@@ -144,6 +148,54 @@ def remove_items_menu(shopping_list: list[ShoppingItem]):
             
             print("[#57e389]Deleted with success")
             sleep(0.8)
+
+
+def search_items_menu(shopping_list: list[ShoppingItem]):
+    while True:
+        clear()
+        print(Panel(
+            "[#57e389]Would you like to search?\n"+
+            "[#57e389]1 - to search\n"+
+            "[#57e389]0 - to return",
+            style='#10d610',
+            title='★ Search Menu ★',
+            subtitle='Type here',
+            width=40
+        ))
+        
+        option = get_options()
+        
+        if option == 0:
+            clear()
+            break
+        
+        if option == 1:
+            clear()
+            search_term = cs.input("[#57e389]Search for item: ").lower()
+            
+            if not search_term:
+                print("[#c01c28]Search term cannot be empty")
+                sleep(0.8)
+                continue
+            
+            results = [item for item in shopping_list if search_term in item['Item'].lower()]
+            
+            clear()
+            if not results:
+                print(f"[#c01c28]No items found with '{search_term}'")
+                sleep(1)
+                continue
+            
+            print('[#57e389]⎯' * 40)
+            print(f"[#57e389]Found {len(results)} result(s):")
+            print('[#57e389]⎯' * 40)
+            
+            for item in results:
+                print(f'[#57e389]Item:[/] {item["Id"]} [green]|[/] [bold]- {item["Item"]}[/] {item["Amount"]} {item["Measures"]}')
+                print('[#57e389]⎯' * 40)
+            
+            _ = cs.input("[#57e389]Press enter to continue")
+            
 
 def exit_program() -> None | bool:
     yes = ['yes', 'y']
