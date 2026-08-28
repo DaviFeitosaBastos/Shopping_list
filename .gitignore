@@ -17,6 +17,7 @@ test.py
 .classpath
 .settings/
 .zed/
+.ruff_cache/
 
 
 # --- Dependency and builds ---
