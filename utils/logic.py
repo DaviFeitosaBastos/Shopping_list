@@ -5,8 +5,6 @@ from typing import TypedDict, cast
 
 from log.logging_setup import get_logger
 
-utils_dir = os.path.dirname(os.path.abspath(__file__))
-list_path = "database/shopping_list.json"
 log = get_logger(__name__)
 
 
