@@ -1,8 +1,9 @@
-from json.decoder import JSONDecodeError
-from log.logging_setup import get_logger
-from typing import cast, TypedDict
-import os
 import json
+import os
+from json.decoder import JSONDecodeError
+from typing import TypedDict, cast
+
+from log.logging_setup import get_logger
 
 utils_dir = os.path.dirname(os.path.abspath(__file__))
 list_path = "database/shopping_list.json"
@@ -17,10 +18,10 @@ class ShoppingItem(TypedDict):
 
 
 class FileHandler:
-    absolute_path = os.path.dirname(os.path.abspath(__file__))
+    absolute_path: str = os.path.dirname(os.path.abspath(__file__))
     
-    def __init__(self, filename) -> None:
-        self.file = os.path.join(self.absolute_path, f"database/{filename}")
+    def __init__(self, filename: str) -> None:
+        self.file:str = os.path.join(self.absolute_path, f"database/{filename}")
     
     def load_files(self):
         try:
@@ -55,7 +56,7 @@ class FileHandler:
         with open(self.file, 'w', encoding='utf8') as f:
             json.dump(shopping_list, f, indent=2)
 
-    def remove_items(self, id):
+    def remove_items(self, id: int):
         shopping_list = self.load_files()
 
         for index, item in enumerate(shopping_list):

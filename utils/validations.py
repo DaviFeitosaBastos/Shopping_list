@@ -1,16 +1,18 @@
-from log.logging_setup import get_logger  
-from rich.console import Console
-from rich import print
-from time import sleep
-from .logic import ShoppingItem
 import subprocess
+from time import sleep
 
+from rich import print
+from rich.console import Console
+
+from log.logging_setup import get_logger
+
+from .logic import ShoppingItem
 
 cs = Console()
 log = get_logger(__name__)
 
 def clear():
-    _ = subprocess.run('clear')
+    _ = subprocess.run('clear', check=False)
 
 def get_options() -> int:
     options = [0, 1, 2, 3, 4]
