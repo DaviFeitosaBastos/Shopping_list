@@ -6,17 +6,18 @@ from rich import print
 import subprocess
 import sys
 from time import sleep
-from utils.logic import add_items_to_list, generate_id, remove_items, ShoppingItem
+from utils.logic import ShoppingItem, FileHandler
 from utils.validations import get_options, get_name, get_amout, get_measures, get_id
 
 cs = Console()
+handler = FileHandler('shopping_list.json')
 
 def clear():
     subprocess.run(['clear']) if sys.platform == 'linux' else subprocess.run(['cls'])
 
-
 def main_menu() -> None:
     clear()
+    shopping_list = handler.load_files()
     print(Panel("[#57e389]Options bellow:[/]\n"+
                 "[#57e389]1 🞄 Add items to the list[/]\n"+
                 "[#57e389]2 🞄 List the items saved\n"+
@@ -29,9 +30,9 @@ def main_menu() -> None:
                 width=35
     ))
 
-
-def add_items_menu(shopping_list: list[ShoppingItem]):
+def add_items_menu():
     while True:
+        shopping_list = handler.load_files()
         clear()
         print(Panel(
             "[#57e389]Would you like to add something?\n"+
@@ -80,16 +81,11 @@ def add_items_menu(shopping_list: list[ShoppingItem]):
             sleep(1)
             clear()
 
-            add_items_to_list(
-                name, 
-                amount, 
-                generate_id(shopping_list),
-                measure, 
-                shopping_list
-            )
+            handler.add_item_to_list(name, amount, measure)
 
 
-def show_items_menu(shopping_list: list[ShoppingItem]) -> None:
+def show_items_menu() -> None:
+    shopping_list = handler.load_files()
     clear()
     
     if not shopping_list:
@@ -123,8 +119,9 @@ def show_items_menu(shopping_list: list[ShoppingItem]) -> None:
     _ = cs.input("[#57e389]Press enter to go back")
 
 
-def remove_items_menu(shopping_list: list[ShoppingItem]):
+def remove_items_menu():
     while True:
+        shopping_list = handler.load_files()
         clear()
         print(Panel(
             "Would you like to remove any item?\n" +
@@ -163,14 +160,15 @@ def remove_items_menu(shopping_list: list[ShoppingItem]):
                     table.add_row(f"[bold blue]{item['Id']}", f"{item['Item']}")
                     
             id = get_id(shopping_list)
-            remove_items(id, shopping_list)
+            handler.remove_items(id)
             
             print("[#57e389]Deleted with success")
             sleep(0.8)
 
 
-def search_items_menu(shopping_list: list[ShoppingItem]):
+def search_items_menu():
     while True:
+        shopping_list = handler.load_files()
         clear()
         print(Panel(
             "[#57e389]Would you like to search?\n"+
