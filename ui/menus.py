@@ -1,23 +1,24 @@
-from rich.panel import Panel
-from rich.console import Console
-from rich.live import Live
-from rich.table import Table
-from rich import print
 import subprocess
 import sys
 from time import sleep
-from utils.logic import ShoppingItem, FileHandler
-from utils.validations import get_options, get_name, get_amout, get_measures, get_id
+
+from rich import print
+from rich.console import Console
+from rich.live import Live
+from rich.panel import Panel
+from rich.table import Table
+
+from utils.logic import FileHandler
+from utils.validations import get_amout, get_id, get_measures, get_name, get_options
 
 cs = Console()
 handler = FileHandler('shopping_list.json')
 
 def clear():
-    subprocess.run(['clear']) if sys.platform == 'linux' else subprocess.run(['cls'])
+    subprocess.run(['clear'], check=False) if sys.platform == 'linux' else subprocess.run(['cls'], check=False)
 
 def main_menu() -> None:
     clear()
-    shopping_list = handler.load_files()
     print(Panel("[#57e389]Options bellow:[/]\n"+
                 "[#57e389]1 🞄 Add items to the list[/]\n"+
                 "[#57e389]2 🞄 List the items saved\n"+
@@ -32,7 +33,6 @@ def main_menu() -> None:
 
 def add_items_menu():
     while True:
-        shopping_list = handler.load_files()
         clear()
         print(Panel(
             "[#57e389]Would you like to add something?\n"+

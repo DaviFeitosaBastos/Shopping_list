@@ -1,7 +1,9 @@
-import sys
 import logging
-from rich.logging import RichHandler
+import sys
 from pathlib import Path
+
+from rich.logging import RichHandler
+
 
 def get_base_dir():
     if hasattr(sys, '_MEIPASS'):

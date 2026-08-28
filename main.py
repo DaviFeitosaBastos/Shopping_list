@@ -1,6 +1,7 @@
+from router import get_router
 from ui.menus import main_menu
 from utils.validations import get_options
-from router import get_router
+
 
 def main():
     router = get_router()

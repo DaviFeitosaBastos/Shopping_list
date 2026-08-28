@@ -1,4 +1,11 @@
-from ui.menus import add_items_menu, exit_program, show_items_menu, remove_items_menu, search_items_menu
+from ui.menus import (
+    add_items_menu,
+    exit_program,
+    remove_items_menu,
+    search_items_menu,
+    show_items_menu,
+)
+
 
 def get_router():
     return {
